@@ -1,5 +1,8 @@
 ﻿using BepInEx;
-
+using HarmonyLib;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using FluffyUnderware.Curvy;
 
 namespace TheLagFixer;
 
@@ -10,5 +13,20 @@ public class Plugin : BaseUnityPlugin
     {
         // Plugin startup logic
         Logger.LogInfo($"The lag fixer has loaded.");
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        Harmony.CreateAndPatchAll(typeof(GamePatches));
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        if (scene.name == "Mian") {}
+    }
+}
+
+public static class GamePatches {
+    [HarmonyPatch(typeof(CameraControl), "FixedUpdate")]
+    [HarmonyPrefix]
+    public static bool FixedUpdate() {
+        return false; // Don't run the original camera movement code
     }
 }
