@@ -20,26 +20,19 @@ public class Plugin : BaseUnityPlugin
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         if (scene.name == "Mian") {
-            StartCoroutine(SetupCamera());
+            // Setup the camera, has to be a Rigidbody or else
+            // it conflicts with the BoxCollider, which is not 2D
+            Rigidbody body = Camera.main.gameObject.AddComponent<Rigidbody>();
+            body.isKinematic = true;
+            body.interpolation = RigidbodyInterpolation.Interpolate;
 
             GameObject player = GameObject.Find("Player");
             Rigidbody2D[] bodies = player.GetComponentsInChildren<Rigidbody2D>();
 
-            foreach (Rigidbody2D body in bodies) {
-                body.interpolation = RigidbodyInterpolation2D.Interpolate;
+            foreach (Rigidbody2D rb in bodies) {
+                rb.interpolation = RigidbodyInterpolation2D.Interpolate;
             }
         }
-    }
-
-    private IEnumerator SetupCamera() {
-        while (Camera.main.GetComponent<BoxCollider>()) {
-            Destroy(Camera.main.GetComponent<BoxCollider>());
-            yield return null;
-        }
-
-        Rigidbody2D body = Camera.main.gameObject.AddComponent<Rigidbody2D>();
-        body.isKinematic = true;
-        body.interpolation = RigidbodyInterpolation2D.Interpolate;
     }
 }
 
@@ -55,7 +48,7 @@ public static class GamePatches {
         ref float ___waterLevel,
         ref float ___lastTF
     ) {
-        Rigidbody2D camBody = __instance.GetComponent<Rigidbody2D>();
+        Rigidbody camBody = __instance.GetComponent<Rigidbody>();
         Rigidbody2D body = __instance.player.GetComponent<Rigidbody2D>();
 
         if (__instance.loadFinished && Application.isPlaying)
