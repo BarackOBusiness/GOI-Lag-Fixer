@@ -15,6 +15,20 @@
     <RootNamespace>TheLagFixer2</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)'=='B5'">
+    <OutputPath>Release/LagFixer.BepInEx5</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='B6'">
+    <OutputPath>Release/LagFixer.BepInEx6</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(Configuration)'=='B5'">
+    <PackageReference Include="BepInEx.Core" Version="5.*" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='B6'">
+    <PackageReference Include="BepInEx.Unity" Version="6.0.0-pre.1" />
+  </ItemGroup>
+
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>lib/netstandard2.0/Assembly-CSharp.dll</HintPath>
@@ -23,7 +37,6 @@
 
   <ItemGroup>
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
-    <PackageReference Include="BepInEx.Unity" Version="6.0.0-pre.1" IncludeAssets="compile" />
     <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
 	<PackageReference Include="UnityEngine.Modules" Version="2020.3.25" IncludeAssets="compile" />
   </ItemGroup>
