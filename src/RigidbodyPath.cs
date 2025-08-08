@@ -4,19 +4,6 @@ using HarmonyLib;
 
 namespace TheLagFixer.Rigidbody;
 
-public static class Rigidbody {
-    public static IEnumerator SetupAlternateCamera() {
-        while (Camera.main.GetComponent<BoxCollider>()) {
-            Component.Destroy(Camera.main.GetComponent<BoxCollider>());
-            yield return null;
-        }
-
-        Rigidbody2D rb = Camera.main.gameObject.AddComponent<Rigidbody2D>();
-        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
-        rb.isKinematic = true;
-    }
-}
-
 public static class Patches {
 	[HarmonyPatch(typeof(CameraControl), "FixedUpdate")]
 	[HarmonyPrefix]
@@ -29,7 +16,7 @@ public static class Patches {
 		ref float ___waterLevel,
 		ref float ___lastTF
 	) {
-		Rigidbody2D rb = __instance.GetComponent<Rigidbody2D>();
+		UnityEngine.Rigidbody rb = __instance.GetComponent<UnityEngine.Rigidbody>();
         Rigidbody2D player = __instance.player.GetComponent<Rigidbody2D>();
 
         if (__instance.loadFinished && Application.isPlaying)
