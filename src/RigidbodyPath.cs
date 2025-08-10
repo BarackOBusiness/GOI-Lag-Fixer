@@ -10,7 +10,7 @@ public static class Patches {
 	public static bool FixedUpdate(
 		CameraControl __instance,
 		ref Camera ___mainCam,
-		// ref Camera ___backgroundCam,
+		ref Camera ___backgroundCam,
 		ref Vector3 ___lookaheadPos,
 		ref Vector3 ___target,
 		ref Vector3 ___vel,
@@ -23,6 +23,9 @@ public static class Patches {
         if (__instance.loadFinished && Application.isPlaying)
 		{
 			bool customMap = UnityEngine.SceneManagement.SceneManager.sceneCount > 1;
+			if (___backgroundCam == null) {
+				___backgroundCam = __instance.transform.Find("BGCamera").GetComponent<Camera>();
+			}
 			if (__instance.player == null)
 			{
 				__instance.player = GameObject.Find("Player");
@@ -46,11 +49,11 @@ public static class Patches {
 			} else {
 				___target.z = GOILevelImporter.Base.metadata.zPlane;
 				___mainCam.farClipPlane = GOILevelImporter.Base.metadata.Farplane;
-				// ___backgroundCam.farClipPlane = GOILevelImporter.Base.metadata.BGFarplane;
+				___backgroundCam.farClipPlane = GOILevelImporter.Base.metadata.BGFarplane;
 				if (GOILevelImporter.Base.metadata.CameraMode == 1) {
 					___mainCam.orthographic = false;
-					// ___backgroundCam.fieldOfView = 60f;
-					// ___backgroundCam.transform.localPosition = Vector3.zero;
+					___backgroundCam.fieldOfView = 60f;
+					___backgroundCam.transform.localPosition = Vector3.zero;
 				}
 			}
 			Vector3 vector5 = new Vector3(0.001f * Mathf.Sin(Time.time), 0.001f * Mathf.Sin(Time.time), 0f);
