@@ -7,7 +7,7 @@ using HarmonyLib;
 
 namespace TheLagFixer;
 
-[BepInPlugin("goi.core.lagfixer", "The Lag Fixer", "1.2.0")]
+[BepInPlugin("goi.core.lagfixer", "The Lag Fixer", "1.2.1")]
 public class TheLagFixer : BaseUnityPlugin
 {
     public ConfigEntry<bool> alternate;

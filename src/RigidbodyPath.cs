@@ -37,7 +37,7 @@ public static class Patches {
 				Vector3 vector2 = __instance.spline.Interpolate(___lastTF + 0.01f);
 				Vector3 vector3 = __instance.spline.Interpolate(___lastTF + 0.02f);
 				Vector3 vector4 = __instance.spline.Interpolate(___lastTF + 0.03f);
-				Vector3 b = 0.3333f * (vector + vector2 + vector3);
+				Vector3 b = 0.3333f * (vector2 + vector3 + vector4);
 				___lookaheadPos = Vector3.Lerp(___lookaheadPos, b, 0.3f);
 				vector = ___lookaheadPos - player.transform.position;
 			}
