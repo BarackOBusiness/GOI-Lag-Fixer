@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using BepInEx;
+﻿using BepInEx;
 using BepInEx.Configuration;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,8 +10,7 @@ namespace TheLagFixer;
 public class TheLagFixer : BaseUnityPlugin
 {
     public ConfigEntry<bool> alternate;
-    public ConfigEntry<bool> smooth;
-    
+
     private void Awake()
     {
         alternate = Config.Bind(
@@ -22,13 +20,6 @@ public class TheLagFixer : BaseUnityPlugin
             "When this option is left default, the camera gains a rigidbody that is moved on physics updates and interpolated like the player. When it's on, the camera movement is moved to LateUpdate instead. It's recommended to keep this setting turned off for vanilla parity. Speedruns submitted to speedrun.com may be rejected when this option is turned on, usage is only advised for developmental purposes."
         );
 
-        smooth = Config.Bind(
-            "",
-            "Smoothed timestep",
-            true,
-            "Whether or not to use a smoothed value for multiplying the camera velocity every frame, only applies with alternate camera logic turned on."
-        );
-    
         // Plugin startup logic
         Logger.LogInfo($"All forms of physics engine induced stutter may have been fixed!");
         SceneManager.sceneLoaded += OnSceneLoad;
