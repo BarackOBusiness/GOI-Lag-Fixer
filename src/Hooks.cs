@@ -1,5 +1,6 @@
 using System.Reflection;
 using BepInEx.Logging;
+using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using MonoMod.RuntimeDetour;
 using UnityEngine;
@@ -40,6 +41,14 @@ internal static class Hooks {
 			x => x.MatchCallvirt<Transform>("set_position")
 		)) {
 			_logger.LogInfo("CameraControl::FixedUpdate hooked");
+			cursor.GotoNext();
+			cursor.RemoveRange(10);
+			cursor.Emit(OpCodes.Ldarg_0);
+			cursor.Emit<CameraControl>(OpCodes.Ldfld, "vel");
+			cursor.EmitDelegate((CameraControl self, Vector3 vel) => {
+				var rb = self.GetComponent<Rigidbody>();
+				rb.MovePosition(rb.position + vel * Time.fixedDeltaTime);
+			});
 		}
 	}
 
