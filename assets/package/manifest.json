@@ -1,0 +1,9 @@
+{
+  "name": "The_Lag_Fixer",
+  "description": "Fixes framerate agnostic stutter present in goi by interpolating rigidbodies.",
+  "version_number": "2.0.0",
+  "dependencies": [
+    "BepInEx-BepInExPack-5.4.2305"
+  ],
+  "website_url": "https://github.com/BarackOBusiness/GOI-Lag-Fixer"
+}
