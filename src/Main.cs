@@ -9,11 +9,13 @@ namespace TheLagFixer;
 public class LagFixerPlugin : BaseUnityPlugin {
     private void Awake() {
         SceneManager.sceneLoaded += OnSceneLoad;
+        Hooks.Hook(Logger);
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
     }
 
     private void OnDestroy() {
         SceneManager.sceneLoaded -= OnSceneLoad;
+        Hooks.Unhook();
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode) {
