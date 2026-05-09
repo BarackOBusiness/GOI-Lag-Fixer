@@ -27,6 +27,11 @@
     </Reference>
   </ItemGroup>
 
+  <!-- Modifies debug properties to properly label builds -->
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <OutputPath>bin/Debug_$(RuntimeIdentifier)/$(MSBuildProjectName)/</OutputPath>
+  </PropertyGroup>
+
   <!-- Modifies release properties and copies thunderstore assets to be zipped up nicely -->
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <OutputPath>bin/Release_$(RuntimeIdentifier)/$(MSBuildProjectName)</OutputPath>
