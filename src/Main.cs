@@ -8,12 +8,15 @@ namespace TheLagFixer;
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 public class LagFixerPlugin : BaseUnityPlugin {
     private void Awake() {
-        SceneManager.sceneLoaded += OnSceneLoad;
-        Hooks.Hook(Logger);
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
     }
 
-    private void OnDestroy() {
+    private void OnEnable() {
+        SceneManager.sceneLoaded += OnSceneLoad;
+        Hooks.Hook(Logger);
+    }
+
+    private void OnDisable() {
         SceneManager.sceneLoaded -= OnSceneLoad;
         Hooks.Unhook();
     }
